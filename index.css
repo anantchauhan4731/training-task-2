@@ -12,6 +12,10 @@ main {
 h1 {
   text-align: center;
   font-size: 40px;
+
+  @media only screen and (max-width: 700px) {
+    font-size: 28px;
+  }
 }
 .stats {
   width: 500px;
@@ -19,6 +23,10 @@ h1 {
   border: 3px solid black;
   padding: 20px;
   border-radius: 25px;
+
+  @media only screen and (max-width: 700px) {
+    width: 300px;
+  }
 }
 
 .activities,
@@ -77,6 +85,33 @@ h1 {
   padding: 20px;
   border-radius: 25px;
   margin: 20px 0;
+
+  .row {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+
+    & button {
+      width: 84px;
+      height: 84px;
+      margin: 15px;
+      cursor: pointer;
+      border-radius: 20px;
+      font-size: 33px;
+      font-weight: 800;
+
+      @media only screen and (max-width: 700px) {
+        width: 40px;
+        height: 40px;
+        border-radius: 10px;
+        font-size: 15px;
+      }
+    }
+  }
+
+  @media only screen and (max-width: 700px) {
+    width: 300px;
+  }
 }
 .board-overlay {
   position: absolute;
@@ -89,26 +124,19 @@ h1 {
   display: flex;
   justify-content: center;
   align-items: center;
-    cursor: pointer;
+  cursor: pointer;
   & h3 {
     color: white;
     font-size: 65px;
   }
 }
 
-.row {
-  display: flex;
-  width: 100%;
-  justify-content: center;
-
-  & button {
-    width: 84px;
-    height: 84px;
-    margin: 15px;
-    cursor: pointer;
-    border-radius: 20px;
-    font-size: 33px;
-    font-weight: 800;
+.instructions {
+  width: 500px;
+  font-size: 27px;
+  @media only screen and (max-width: 700px) {
+    width: 300px;
+    font-size: 20px;
   }
 }
 
@@ -125,10 +153,5 @@ h1 {
 }
 
 .hide {
-    display: none;
-}
-
-.instructions {
-  width: 500px;
-  font-size: 27px;
+  display: none;
 }

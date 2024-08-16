@@ -1,4 +1,5 @@
-const board = document.getElementsByClassName("board");
+"use strict";
+
 const buttons = document.getElementsByClassName("btn");
 const boardOverlay = document.getElementById("board-overlay");
 const moves = document.getElementById("moves");
@@ -20,6 +21,7 @@ let totalSeconds = secondsLocalStorage !== null ? +secondsLocalStorage : 0;
 let totalMinutes = minutesLocalStorage !== null ? +minutesLocalStorage : 0;
 let flag = flagLocalStorage !== null ? +flagLocalStorage : 0;
 
+// check localstorage
 if (
   movesLocalStorage ||
   secondsLocalStorage ||
@@ -39,7 +41,6 @@ if (
 
 const buttonsEventListener = () => {
   const storedBoard = JSON.parse(localStorage.getItem("currArr"));
-  console.log(storedBoard);
   for (let i = 0; i < buttons.length; i++) {
     buttons[i].addEventListener("click", () => {
       boxMoving.play();
@@ -102,7 +103,6 @@ const buttonsEventListener = () => {
         ];
         update(i - 1, neighbour4, currButton);
       }
-      console.log("updated =>", storedBoard);
       localStorage.setItem("currArr", JSON.stringify(storedBoard));
     });
   }
@@ -152,11 +152,8 @@ const updateClock = () => {
 
 // shuffle array
 const shuffle = () => {
-  console.log(localStorage.getItem("currArr"));
   if (resumeAnswer) {
     boardArr = JSON.parse(localStorage.getItem("currArr"));
-
-    console.log("retrieved", boardArr);
     return;
   }
   let currIdx = boardArr.length;
@@ -206,7 +203,6 @@ const update = (ind, b1, b2) => {
   b2.classList.remove("empty");
   b2.classList.remove("correct");
   b2.classList.remove("incorrect");
-  console.log(ind, b1.innerHTML, b2.innerHTML);
   if (ind === +b1.innerHTML - 1) {
     b1.classList.add("correct");
   } else {

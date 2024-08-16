@@ -30,6 +30,14 @@ h1 {
   margin: 10px;
   gap: 20px;
   font-weight: 800;
+
+  & button {
+    background-color: black;
+    border: 0;
+    height: 50px;
+    width: 50px;
+    border-radius: 30px;
+  }
 }
 
 .moves,
@@ -81,7 +89,7 @@ h1 {
   display: flex;
   justify-content: center;
   align-items: center;
-
+    cursor: pointer;
   & h3 {
     color: white;
     font-size: 65px;

@@ -17,17 +17,20 @@
           </div>
           <div class="timer">
             <h5>Time</h5>
-            <p id="time">0</p>
+            <p id="time">00:00</p>
           </div>
         </div>
         <div class="actions">
-          <button>Pause</button>
-          <button>Retry</button>
+          <button id="pause"><img src="./assets/pauseIcon.svg"/></button>
+          <button id="retry"><img src="./assets/resetIcon.svg"></button>
+          <audio id="box-moving">
+            <source src="./assets/box-moving.mp3">
+          </audio>
         </div>
       </section>
       <section class="board">
         <div id="board-overlay" class="board-overlay">
-            <h3>Play</h3>
+            <h3 id="current-game-status">Play</h3>
         </div>
         <div class="row">
           <button id="btn-1" class="btn">1</button>

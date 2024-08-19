@@ -14,7 +14,7 @@ let secondsLocalStorage = localStorage.getItem("seconds");
 let minutesLocalStorage = localStorage.getItem("minutes");
 let flagLocalStorage = localStorage.getItem("flag");
 let resumeAnswer = null;
-let boardArr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, null];
+let boardArr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, null, 15];
 
 let totalMoves = movesLocalStorage !== null ? +movesLocalStorage : 0;
 let totalSeconds = secondsLocalStorage !== null ? +secondsLocalStorage : 0;
@@ -31,10 +31,14 @@ if (
   resumeAnswer = window.confirm("Resume the game ?");
   if (resumeAnswer) {
     moves.innerHTML = totalMoves;
+    time.innerHTML = `${totalMinutes > 9 ? "" : "0"}${totalMinutes}:${
+      totalSeconds > 9 ? "" : "0"
+    }${totalSeconds}`;
   } else {
     localStorage.clear();
     totalSeconds = 0;
     totalMinutes = 0;
+    totalMoves = 0;
   }
 }
 /* ----------------------------------------------- EVENT LISTNERS -------------------------------------------------- */
@@ -43,7 +47,6 @@ const buttonsEventListener = () => {
   const storedBoard = JSON.parse(localStorage.getItem("currArr"));
   for (let i = 0; i < buttons.length; i++) {
     buttons[i].addEventListener("click", () => {
-      boxMoving.play();
       // current button
       const currButton = buttons[i];
 
@@ -63,6 +66,7 @@ const buttonsEventListener = () => {
 
       // swapping the buttons inner HTML logic
       if (neighbour1 && neighbour1.innerHTML === "") {
+        boxMoving.play();
         [storedBoard[i], storedBoard[i + 4]] = [
           storedBoard[i + 4],
           storedBoard[i],
@@ -73,6 +77,7 @@ const buttonsEventListener = () => {
         ];
         update(i + 4, neighbour1, currButton);
       } else if (neighbour2 && neighbour2.innerHTML === "") {
+        boxMoving.play();
         [storedBoard[i], storedBoard[i - 4]] = [
           storedBoard[i - 4],
           storedBoard[i],
@@ -83,6 +88,7 @@ const buttonsEventListener = () => {
         ];
         update(i - 4, neighbour2, currButton);
       } else if (neighbour3 && neighbour3.innerHTML === "") {
+        boxMoving.play();
         [storedBoard[i], storedBoard[i + 1]] = [
           storedBoard[i + 1],
           storedBoard[i],
@@ -93,6 +99,7 @@ const buttonsEventListener = () => {
         ];
         update(i + 1, neighbour3, currButton);
       } else if (neighbour4 && neighbour4.innerHTML === "") {
+        boxMoving.play();
         [storedBoard[i], storedBoard[i - 1]] = [
           storedBoard[i - 1],
           storedBoard[i],
@@ -103,6 +110,7 @@ const buttonsEventListener = () => {
         ];
         update(i - 1, neighbour4, currButton);
       }
+      checkGreens(storedBoard);
       localStorage.setItem("currArr", JSON.stringify(storedBoard));
     });
   }
@@ -185,10 +193,23 @@ const initializeBoard = () => {
       if (i + 1 !== +buttons[i].innerHTML) {
         buttons[i].classList.add("incorrect");
       } else {
-        buttons[i].classList.add("incorrect");
         buttons[i].classList.add("correct");
       }
     }
+  }
+};
+
+const checkGreens = (arr) => {
+  let numGreen = 0;
+  for (let i = 0; i < arr.length; i++) {
+    if (arr[i] && arr[i] === i + 1) {
+      numGreen++;
+    }
+  }
+  if (numGreen === 15) {
+    flag = 0;
+    boardOverlay.classList.remove("hide");
+    currentGameStatus.innerHTML = "YOU WON!!";
   }
 };
 
@@ -197,18 +218,14 @@ const update = (ind, b1, b2) => {
   totalMoves++;
   moves.innerHTML = totalMoves;
   localStorage.setItem("moves", totalMoves);
-  b1.classList.remove("empty");
-  b1.classList.remove("correct");
-  b1.classList.remove("incorrect");
-  b2.classList.remove("empty");
-  b2.classList.remove("correct");
-  b2.classList.remove("incorrect");
+  b1.classList.remove("empty", "correct", "incorrect");
+  b2.classList.remove("empty", "correct", "incorrect");
   if (ind === +b1.innerHTML - 1) {
     b1.classList.add("correct");
   } else {
     b1.classList.add("incorrect");
   }
-  b2.classList.remove("incorrect");
+
   b2.classList.add("empty");
 };
 
